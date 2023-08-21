@@ -8,8 +8,7 @@ Dylis Salim, Mark Sanderson, Falk Scholer, and Damiano Spina. 2023. [Designing
 and Evaluating Presentation Strategies for Fact-Checked Content](https://www.danulahettiachchi.com/papers/cikm23.pdf).
 In Proceedings of the 32nd ACM International Conference on Information
 and Knowledge Management (CIKM ’23), October 21–25, 2023, Birmingham,
-United Kingdom. ACM, New York, NY, USA, 11 pages. https://doi.org/10.
-1145/3583780.3614841
+United Kingdom. ACM, New York, NY, USA, 11 pages. https://doi.org/10.1145/3583780.3614841
 
 ## BibTeX
 
