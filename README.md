@@ -18,7 +18,6 @@ In addition, the experiment includes,
 **Fact-checking Articles**: The current experiment includes 8 fact-checking articles, four from PolitiFact and four from RMIT ABC Fact Check. Article data and the corresponding question can be configured in ``presentation/screen/resources/articles.py`` and article metadata such as images are included in ``presentation/screen/static/screen/img``
 
 **Questions**: Questions included in the Conspiracy Mentality Questionnaire and Credibility of Science Scale are given in ``presentation/screen/resources/questions.py`` and demographics questions can be modified at ``presentation/screen/templates/screen/demographics.html``
-``
 
 **Participant Information Sheet**: Add details of your institute's Ethics/IRB approval to ``presentation/screen/static/screen/files/PIS.pdf``
 
@@ -28,14 +27,18 @@ The project is configured as a standard Django project. Please read [Django docu
 
 Deployment Steps
 
-- Configure environment variables in ``presentation/presentation/.env`` and Django settings in ``presentation/presentation/settings.py``
-
-- Install project dependecies ``pip install -r presentation/requirements.txt``. A python virtual environment is recommended.
-
+- Default settings will work for local deployment. Configure environment variables in ``presentation/presentation/.env`` and Django settings in ``presentation/presentation/settings.py`` for web deployment.
+- Install project dependencies ``pip install -r presentation/requirements.txt``. A python virtual environment is recommended.
 - Configure the database ``python presentation/manage.py migrate``
 - Start the server ``python presentation/manage.py runserver``
-
 - Navigate to ``http://<host>:8000/screen/start`` start the task.
+
+Things to Note
+- You may need to install [PostgreSQL](https://www.postgresql.org/download/) before installing ``psycopg2``, which is only required for web deployment.
+
+### Data Collection
+
+Study data will be mainly stored in two tables. `StudyRecord` table will include a row for each study participant and will include questionnaire data, demographics and details like study start time. `ReportRecord` table will include entries per user per article. It will record responses to questions related to the article and other interaction data (e.g., scroll events, clicks).
 
 
 # Citation
