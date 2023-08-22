@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    {% load static %}
+    <script type="text/javascript" src="{% static 'jquery-3.6.1.min.js' %}"></script>
+
+    <script type="application/javascript">
+        $(document).ready(function () {
+            (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+        });
+
+
+    </script>
+</head>
+
+<body>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="progress my-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                         aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+
+            <div class="alert alert-info text-center" role="alert">
+                Instructions
+            </div>
+            <p>This HIT includes <b>[A]</b> a 11-item questionnaire, <b>[B]</b> <b>8 tasks</b> and <b>[C]</b> a demographic survey. You should complete all 8 tasks and the questionnaire and the survey to receive the payment of US$5. We estimate that it would take 20 minutes in total.</p>
+            <p>In each task, you will be asked to read a fact checking report and answer a set of questions. </p>
+            <p>Each fact checking report will open in a new tab. After reading the report, you will have to return to the main task window to answer the questions. Please do not close the task window during the study. You won't be able to complete the HIT if you close the task window.</p>
+
+            <p>Please refer to the <a href="{% static 'screen/files/PIS.pdf' %}" target="_blank">Participant Information Sheet</a> for more details.</p>
+            <form class="row g-3 needs-validation" action="/screen/start" method="post" novalidate>
+                {% csrf_token %}
+                <div class="row my-5">
+                    <label for="workerid" class="col-sm-5 col-form-label">Enter your Worker ID</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="worker_id" required/>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary">Start</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

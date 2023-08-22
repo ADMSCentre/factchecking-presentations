@@ -1,0 +1,329 @@
+{% extends "screen/base.html" %}
+
+{% block head %}
+    <title>[C] Survey</title>
+
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('#button-article').click(function () {
+                $('#next').prop('disabled', false);
+            });
+
+            $('#country_us,#country_au').change(function () {
+                let current_val = $('input[name="country"]:checked').val();
+                if (current_val == 'country_us') {
+                    $(".political_us").show();
+                    $(".political_au").hide();
+
+                } else if (current_val == 'country_au') {
+                    $(".political_us").hide();
+                    $(".political_au").show();
+                }
+                $('input[name="political"]').prop('checked', false);
+            });
+
+            $(".debunked-question").hide();
+
+            $('#shared_yes,#shared_no').change(function () {
+                let current_val = $('input[name="shared"]:checked').val();
+                if (current_val == 'shared_yes') {
+                    $(".debunked-question").show();
+                    $("#debunked_1").prop('required',true);
+
+                } else if (current_val == 'shared_no') {
+                    $(".debunked-question").hide();
+                    $("#debunked_1").prop('required',false);
+                }
+
+            });
+
+
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        })
+        ;
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col col-md-10">
+                <div class="progress my-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90"
+                         aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+
+                <div class="alert alert-info text-center" role="alert">
+                    <b>[C] Demographic Survey</b> - Do not close until you submit the HIT
+                </div>
+
+                <form class="row needs-validation" action="/screen/demographics" method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="col-12 mt-3">
+                        <p>[1] What is your age?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_0" value="age_0" required>
+                            <label class="form-check-label" for="age_0">
+                                17 years or below.
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_1" value="age_1">
+                            <label class="form-check-label" for="age_1">18-24 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_2" value="age_2">
+                            <label class="form-check-label" for="age_2">25-34 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_3" value="age_3">
+                            <label class="form-check-label" for="age_3">35-44 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_4" value="age_4">
+                            <label class="form-check-label" for="age_4">45-54 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_5" value="age_5">
+                            <label class="form-check-label" for="age_5">55-64 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_6" value="age_6">
+                            <label class="form-check-label" for="age_6">65-74 years.</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="age" id="age_7" value="age_7">
+                            <label class="form-check-label" for="age_7">75 years or more.</label>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p>[2] What is your gender?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender_female"
+                                   value="gender_female" required>
+                            <label class="form-check-label" for="gender_female">
+                                Female
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender_male"
+                                   value="gender_male">
+                            <label class="form-check-label" for="gender_male">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" id="gender_nonbinary"
+                                   value="gender_nonbinary">
+                            <label class="form-check-label" for="gender_nonbinary">
+                                Non-binary
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p>[3] What is your highest level of education?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="education" id="education_1"
+                                   value="education_1" required>
+                            <label class="form-check-label" for="education_1">Bachelor Degree or higher</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="education" id="education_2"
+                                   value="education_2" required>
+                            <label class="form-check-label" for="education_2">Diploma or equivalent</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="education" id="education_3"
+                                   value="education_3" required>
+                            <label class="form-check-label" for="education_3">Secondary Education (High School or Year
+                                12)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="education" id="education_4"
+                                   value="education_4" required>
+                            <label class="form-check-label" for="education_4">Primary or Middle School</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="education" id="education_5"
+                                   value="education_5" required>
+                            <label class="form-check-label" for="education_5">No formal school education</label>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <p>[4] What is your usual country of residence?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="country" id="country_us"
+                                   value="country_us" required>
+                            <label class="form-check-label" for="country_us">
+                                US
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="country" id="country_au"
+                                   value="country_au">
+                            <label class="form-check-label" for="country_au">
+                                Australia
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="country" id="country_other"
+                                   value="country_other">
+                            <label class="form-check-label" for="country_other">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <p>[5] How do you identify yourself politically?</p>
+                        <div class="form-check political_us">
+                            <input class="form-check-input" type="radio" name="political" id="political_democratic"
+                                   value="political_democratic" required>
+                            <label class="form-check-label" for="political_democratic">Democratic</label>
+                        </div>
+                        <div class="form-check political_us">
+                            <input class="form-check-input" type="radio" name="political" id="political_republican"
+                                   value="political_republican">
+                            <label class="form-check-label" for="political_republican">Republican</label>
+                        </div>
+                        <div class="form-check political_au">
+                            <input class="form-check-input" type="radio" name="political" id="political_liberal"
+                                   value="political_liberal">
+                            <label class="form-check-label" for="political_liberal">Liberal</label>
+                        </div>
+                        <div class="form-check political_au">
+                            <input class="form-check-input" type="radio" name="political" id="political_labor"
+                                   value="political_labor">
+                            <label class="form-check-label" for="political_labor">Labor</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="political" id="political_independent"
+                                   value="political_independent">
+                            <label class="form-check-label" for="political_independent">Independent</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="political" id="political_other"
+                                   value="political_other">
+                            <label class="form-check-label" for="political_other">Other</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <p>[6] How often do you visit fact-checking websites?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="websites" id="websites_frequent"
+                                   value="websites_frequent" required>
+                            <label class="form-check-label" for="websites_frequent">
+                                Frequently (more than once a week)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="websites" id="websites_occasionally"
+                                   value="websites_occasionally">
+                            <label class="form-check-label" for="websites_occasionally">
+                                Occasionally (several times a month)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="websites" id="websites_rarely"
+                                   value="websites_rarely">
+                            <label class="form-check-label" for="websites_rarely">
+                                Rarely (several times a year or less)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <p>[7] How capable do you think you are at differentiating fake news from other kinds of news?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="capability" id="capability_1" value="capability_1" required>
+                            <label class="form-check-label" for="capability_1">Very Capable</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="capability" id="capability_2" value="capability_2">
+                            <label class="form-check-label" for="capability_2">Moderately capable</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="capability" id="capability_3" value="capability_3">
+                            <label class="form-check-label" for="capability_3">A little bit capable</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="capability" id="capability_4" value="capability_4">
+                            <label class="form-check-label" for="capability_4">Not at all capable</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="capability" id="capability_5" value="capability_5">
+                            <label class="form-check-label" for="capability_5">Unsure</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <p>[8] Have you ever shared a piece of information that you later discovered was false or misleading?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shared" id="shared_yes" value="shared_yes" required>
+                            <label class="form-check-label" for="shared_yes">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shared" id="shared_no" value="shared_no">
+                            <label class="form-check-label" for="shared_no">No</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3 debunked-question">
+                        <p>[9] How did you discover the shared information was false or misleading?</p>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="debunked" id="debunked_1" value="debunked_1">
+                            <label class="form-check-label" for="debunked_1">From a fact-checking article</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="debunked" id="debunked_2" value="debunked_2">
+                            <label class="form-check-label" for="debunked_2">From another regular news article</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="debunked" id="debunked_3" value="debunked_3">
+                            <label class="form-check-label" for="debunked_3">From a social media user</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="debunked" id="debunked_4" value="debunked_4">
+                            <label class="form-check-label" for="debunked_4">From someone that I know</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="debunked" id="debunked_5" value="debunked_5">
+                            <label class="form-check-label" for="debunked_5">Other</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-5 text-center">
+                        <button id="next" type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

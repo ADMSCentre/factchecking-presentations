@@ -1,5 +1,42 @@
-# Under Construction...
+# Designing and Evaluating Presentation Strategies for Fact-Checked Content
+
 Data and code used in the CIKM’23 paper [Designing and Evaluating Presentation Strategies for Fact-Checked Content](https://www.danulahettiachchi.com/papers/cikm23.pdf).
+
+The current study setup includes eight tasks where users are asked to read a fact-checking report and answer a set of questions. In each task, the
+main task page included a link that opens the fact-checking report in a new browser tab. All user engagements (e.g., scrolls, clicks)
+within the report page are recorded and tracked.
+
+In addition, the experiment includes,
+
+- The five-item Conspiracy Mentality Questionnaire (CMQ)
+- The six-item Credibility of Science Scale (CoSS)
+- Demographics questions
+
+
+### Data
+
+**Fact-checking Articles**: The current experiment includes 8 fact-checking articles, four from PolitiFact and four from RMIT ABC Fact Check. Article data and the corresponding question can be configured in ``presentation/screen/resources/articles.py`` and article metadata such as images are included in ``presentation/screen/static/screen/img``
+
+**Questions**: Questions included in the Conspiracy Mentality Questionnaire and Credibility of Science Scale are given in ``presentation/screen/resources/questions.py`` and demographics questions can be modified at ``presentation/screen/templates/screen/demographics.html``
+``
+
+**Participant Information Sheet**: Add details of your institute's Ethics/IRB approval to ``presentation/screen/static/screen/files/PIS.pdf``
+
+### Deployment
+
+The project is configured as a standard Django project. Please read [Django documentaion](https://docs.djangoproject.com/) for more details on development and deployment. Project can be run locally, or it can be easily deployed on a platform like Heroku.
+
+Deployment Steps
+
+- Configure environment variables in ``presentation/presentation/.env`` and Django settings in ``presentation/presentation/settings.py``
+
+- Install project dependecies ``pip install -r presentation/requirements.txt``. A python virtual environment is recommended.
+
+- Configure the database ``python presentation/manage.py migrate``
+- Start the server ``python presentation/manage.py runserver``
+
+- Navigate to ``http://<host>:8000/screen/start`` start the task.
+
 
 # Citation
 

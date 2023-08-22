@@ -1,0 +1,159 @@
+{% extends "screen/base.html" %}
+
+{% block head %}
+    <title>[A] Questionnaire</title>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        });
+
+
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col col-md-10">
+        <div class="progress my-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="5"
+                         aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+            <div class="alert alert-info text-center" role="alert">
+                <b>[A] Questionnaire</b> - Do not close until you submit the HIT
+            </div>
+
+            <form class="row needs-validation" action="/screen/questionnaire" method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="row mt-3">
+                    <p>Complete this questionnaire by rating the following statements.</p>
+                    <p>For each statement, indicate the degree to which you agree or disagree.</p>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row row-cols-7" style="font-size: 11pt">
+                            <div class="col-sm text-center"><b>Disagree very strongly</b></div>
+                            <div class="col-sm text-center"><b>Disagree strongly</b></div>
+                            <div class="col-sm text-center"><b>Disagree somewhat</b></div>
+                            <div class="col-sm text-center"><b>Neither agree nor disagree</b></div>
+                            <div class="col-sm text-center"><b>Agree somewhat</b></div>
+                            <div class="col-sm text-center"><b>Agree strongly</b></div>
+                            <div class="col-sm text-center"><b>Agree very strongly</b></div>
+                        </div>
+                    </div>
+                </div>
+
+                {% for q in q1 %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="form-group row align-items-center bg-light">
+                    {% else %}
+                        <div class="form-group row align-items-center">
+                    {% endif %}
+
+                    <label for="q1" class="col-sm-4 col-form-label">{{ q.text }}</label>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-7 align-items-end">
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option1"
+                                       value="option1" required>
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option2"
+                                       value="option2">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option3"
+                                       value="option3">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option4"
+                                       value="option4">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option5"
+                                       value="option5">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option6"
+                                       value="option6">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option7"
+                                       value="option7">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% for q in q2 %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="form-group row align-items-center">
+                    {% else %}
+                        <div class="form-group row align-items-center bg-light">
+                    {% endif %}
+
+                    <label for="q1" class="col-sm-4 col-form-label">{{ q.text }}</label>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-7 align-items-end">
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option1"
+                                       value="option1" required>
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option2"
+                                       value="option2">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option3"
+                                       value="option3">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option4"
+                                       value="option4">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option5"
+                                       value="option5">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option6"
+                                       value="option6">
+                            </div>
+                            <div class="form-check col-sm text-center">
+                                <input class="form-check-input likert" type="radio" name="{{ q.id }}" id="option7"
+                                       value="option7">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="col-12 mt-5 text-center">
+                    <button id="next" type="submit" class="btn btn-primary">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

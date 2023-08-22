@@ -1,0 +1,26 @@
+{% extends "screen/base.html" %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/task.css' %}">
+    <script type="application/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-3 justify-content-md-center">
+            <div class="col-md-8 mt-3">
+                <div class="alert alert-warning text-center" role="alert">
+                    {{ error_message }}
+                </div>
+                <div class="mx-3">
+                    <p>Please contact the researchers with the above error message if you need any help or if you have reached this page unexpectedly.</p>
+                    <p><samp>{{ code }}</samp></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends "screen/base.html" %}
+
+{% block head %}
+    <title>[B] Task {{ current_task }} of 8</title>
+
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('#button-article').click(function () {
+                $('#next').prop('disabled', false);
+            });
+
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col col-md-10">
+        <div class="progress my-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ current_task }}0%;" aria-valuenow="{{ current_task }}0"
+                         aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+
+            <div class="alert alert-info text-center" role="alert">
+                <b>[B] Task {{ current_task }} </b> of 8 - Main Task Window - Do not close until you submit the HIT
+            </div>
+
+
+            <p><b>[Step 1]</b> Read the following fact checking report.</p>
+            <a id="button-article" type="button" class="btn btn-primary"
+               href="/screen/report/{{ article }}/{{ condition }}"
+               target="_blank">Click to open the Fact Checking
+                report in a new tab
+            </a>
+
+            <p class="mt-3"><b>[Step 2]</b> Answer the following questions by selecting the most suitable option. </p>
+
+            <form class="row needs-validation" action="/screen/task" method="post" novalidate>
+                {% csrf_token %}
+                <div class="col-12 mt-3">
+                    <p>[1] What is the final verdict of the fact-checking report?</p>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="veracity" id="veracity_false" value="false" required>
+                        <label class="form-check-label" for="veracity_false">
+                            False
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="veracity" id="veracity_true" value="true">
+                        <label class="form-check-label" for="veracity_true">
+                            True
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <p>[2] {{ questions.q1.text }}</p>
+                    {% for option in questions.q1.options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q1" id="q1-o{{ forloop.counter }}" value="option{{ forloop.counter }}"
+                                   required>
+                            <label class="form-check-label" for="q1-o{{ forloop.counter }}">
+                                {{ option }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="response_text" class="form-label">[3] Explain <b>in your own words</b> how the fact-checking organisation validated this claim.</label>
+                    <textarea class="form-control" id="response_text" name="q2" rows="3" minlength="100" maxlength="2048"
+                              placeholder="Response should include at least 100 characters." required></textarea>
+
+                    <div class="invalid-feedback">
+                        Response should include at least 100 characters.
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <p>[4] Please rate the following statements, considering how the fact-checking report is
+                        presented.</p>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-5" style="font-size: 11pt">
+                            <div class="col-sm-2 text-center"><b>Disagree strongly</b></div>
+                            <div class="col-sm-2 text-center"><b>Disagree somewhat</b></div>
+                            <div class="col-sm-2 text-center"><b>Disagree slightly</b></div>
+                            <div class="col-sm-2 text-center"><b>Agree slightly</b></div>
+                            <div class="col-sm-2 text-center"><b>Agree somewhat</b></div>
+                            <div class="col-sm-2 text-center"><b>Agree strongly</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row align-items-center">
+                    <label for="q1" class="col-sm-4 col-form-label">The report includes information that I would
+                        normally look for.</label>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-5 align-items-end">
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option1"
+                                       value="option1" required>
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option2"
+                                       value="option2">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option3"
+                                       value="option3">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option4"
+                                       value="option4">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option5"
+                                       value="option5">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_1" id="option6"
+                                       value="option6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="q1" class="col-sm-4 col-form-label">The report appears to be credible.</label>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-5 align-items-end">
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option1"
+                                       value="option1" required>
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option2"
+                                       value="option2">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option3"
+                                       value="option3">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option4"
+                                       value="option4">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option5"
+                                       value="option5">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_2" id="option6"
+                                       value="option6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                    <label for="q1" class="col-sm-4 col-form-label">The report is easy to follow.</label>
+                    <div class="col-sm-8">
+                        <div class="row row-cols-5 align-items-end">
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option1"
+                                       value="option1" required>
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option2"
+                                       value="option2">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option3"
+                                       value="option3">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option4"
+                                       value="option4">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option5"
+                                       value="option5">
+                            </div>
+                            <div class="form-check col-sm-2 text-center">
+                                <input class="form-check-input likert" type="radio" name="q3_3" id="option6"
+                                       value="option6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 mt-5 text-center">
+                    <button id="next" type="submit" class="btn btn-primary" disabled>Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
